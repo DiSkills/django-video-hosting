@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>Home</title>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet"
+              integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
+        <link rel="stylesheet" type="text/css" href="{% static 'main/style.css' %}">
+    </head>
+    <body>
+
+        <div class="container">
+            {% for video in videos %}
+                <div class="row">
+                    <video controls preload="none" poster="{{ video.preview.url }}">
+                        <source src="{{ video.file.url }}" type="video/mp4">
+                    </video>
+                </div>
+                <div class="row">
+                    <p class="h3 text-center">{{ video.title }}</p>
+                    <div class="col">
+                        Author: {{ video.author }}
+                    </div>
+                    <div class="col">
+                        Category: {{ video.category }}
+                    </div>
+                    <p class="mt-2">Description:</p>
+                    <div class="margin-left"><p>{{ video.description }}</p></div>
+                </div>
+                <div class="row">
+                    <div class="col-md-9"></div>
+                    <div class="col-md-3 right">{{ video.created_at }}</div>
+                </div>
+            {% endfor %}
+        </div>
+
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js"
+                integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4"
+                crossorigin="anonymous"></script>
+    </body>
+</html>
