@@ -1,0 +1,20 @@
+<div class="row">
+    <video controls preload="none" poster="{{ video.preview.url }}">
+        <source src="{{ video.file.url }}" type="video/mp4">
+    </video>
+</div>
+<div class="row">
+    <p class="h3 text-center">{{ video.title }}</p>
+    <div class="col text-center">
+        Author: {{ video.author }}
+    </div>
+    <div class="col text-center">
+        Category: {{ video.category }}
+    </div>
+    <p class="mt-2">Description:</p>
+    <div class="margin-left"><p>{{ video.description }}</p></div>
+</div>
+<div class="row">
+    <div class="col-md-9"></div>
+    <div class="col-md-3 right">{{ video.created_at }}</div>
+</div>

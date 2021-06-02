@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
+from django.urls import reverse
 
 
 class AdvUser(AbstractUser):
@@ -27,8 +28,9 @@ class Category(models.Model):
 
 class Video(models.Model):
     """ Video """
-    category = models.ForeignKey(Category, on_delete=models.PROTECT, verbose_name='Category')
+    category = models.ForeignKey(Category, on_delete=models.PROTECT, verbose_name='Category', related_name='videos')
     title = models.CharField(max_length=255, verbose_name='Title')
+    slug = models.SlugField(unique=True, verbose_name='Slug')
     description = models.TextField(verbose_name='Description')
     author = models.ForeignKey(AdvUser, on_delete=models.CASCADE, verbose_name='Author')
     file = models.FileField(verbose_name='Video')

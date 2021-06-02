@@ -1,13 +1,21 @@
 from django.shortcuts import render, redirect
-from django.views.generic import ListView, View
+from django.views.generic import ListView, DetailView
 
-from .models import Category, Video
+from .models import Video
 
 
-class BaseView(View):
+class BaseView(ListView):
     """ Home """
 
-    def get(self, request, *args, **kwargs):
-        videos = Video.objects.all()
-        context = {'videos': videos}
-        return render(request, 'base.html', context)
+    model = Video
+    template_name = 'base.html'
+
+
+class VideoDetailView(DetailView):
+    """ Detail video """
+
+    model = Video
+    queryset = Video.objects.all()
+    context_object_name = 'video'
+    template_name = 'video_detail.html'
+    slug_url_kwarg = 'slug'
