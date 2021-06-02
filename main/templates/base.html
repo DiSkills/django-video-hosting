@@ -36,10 +36,36 @@
         {% endblock navbar %}
 
         <div class="container">
+            <div class="row">
+                {% if messages %}
+                    {% for message in messages %}
+                        <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                            <strong>{{ message }}</strong>
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
+                    {% endfor %}
+                {% endif %}
+            </div>
+
             {% block content %}
-                {% for video in video_list %}
-                    {% include '_video.html' %}
-                {% endfor %}
+                <div class="row mb-5">
+                    {% for video in video_list %}
+                        <div class="col-md-3">
+                            <div class="card h-100">
+                                <img class="img-thumbnail" src="{{ video.preview.url }}" alt="">
+                                <div class="card-body p-4">
+                                    <div class="text-center">
+                                        <a class="fw-bolder h5" href="{% url 'main:video_detail' slug=video.slug %}">{{ video.title }}</a>
+                                    </div>
+                                    <div class="text-center mt-5">
+                                        <a class="h5" href="#">{{ video.author }}</a>
+                                    </div>
+                                </div>
+                                <div class="right">{{ video.created_at }}</div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
             {% endblock content %}
         </div>
 
