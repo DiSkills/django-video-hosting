@@ -7,8 +7,15 @@
 {% block content %}
     <div class="row mb-5">
         <div class="col-8">
+            <div class="row text-center mb-2">
+                <div class="col">
+                    <img style="width: 200px;" class="img-fluid" src="{{ account.avatar.url }}" alt="">
+                </div>
+                <div class="col h1">
+                    {{ account.username.title }} videos <span class="badge rounded-pill bg-secondary">{{ account.videos.count }}</span>
+                </div>
+            </div>
             <div class="row">
-                <h1 class="text-center">{{ account.username.title }} videos <span class="badge rounded-pill bg-secondary">{{ account.videos.count }}</span></h1>
                 {% for video in account.videos.all %}
                     <div class="col">
                         {% include '_video_poster.html' %}

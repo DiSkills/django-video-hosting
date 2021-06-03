@@ -41,4 +41,15 @@ class RegistrationForm(forms.ModelForm):
 
     class Meta:
         model = AdvUser
-        fields = ('username', 'email', 'password', 'repeat_password', 'first_name', 'last_name', 'send_messages')
+        fields = ('username', 'email', 'password', 'repeat_password', 'first_name', 'last_name',
+                  'send_messages', 'avatar')
+
+
+class ChangeProfileForm(forms.ModelForm):
+    """ Profile change """
+
+    email = forms.EmailField(required=True, label='Email')
+
+    class Meta:
+        model = AdvUser
+        fields = ('username', 'email', 'first_name', 'last_name', 'send_messages', 'avatar')

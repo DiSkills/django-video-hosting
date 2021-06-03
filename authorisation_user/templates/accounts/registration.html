@@ -8,7 +8,7 @@
     <div class="row mb-3">
         <h1 class="text-center">Registration</h1>
         <div class="col-md-6 offset-md-3">
-            <form action="{% url 'accounts:registration' %}" method="post">
+            <form action="{% url 'accounts:registration' %}" method="post" enctype='multipart/form-data'>
                 {% csrf_token %}
                 {{ form|crispy }}
                 <input type="submit" class="btn btn-success" value="Registration">

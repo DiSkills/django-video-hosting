@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+
+{% load crispy_forms_tags %}
+
+{% block title %}Change profile{% endblock title %}
+
+{% block content %}
+    <div class="row mb-5">
+        <h1 class="text-center">Change Profile</h1>
+        <div class="col-md-6 offset-md-3">
+            <form action="{% url 'accounts:profile_change' %}" method="post" enctype='multipart/form-data'>
+                {% csrf_token %}
+                {{ form|crispy }}
+                <input type="submit" class="mt-2 btn btn-success" value="Change">
+            </form>
+        </div>
+    </div>
+{% endblock content %}

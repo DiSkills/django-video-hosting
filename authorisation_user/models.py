@@ -11,6 +11,7 @@ class AdvUser(AbstractUser):
                                           related_name='subscriptions')
     subscriber = models.ManyToManyField('AdvUser', verbose_name='Subscribers', blank=True,
                                         related_name='subscribers')
+    avatar = models.ImageField(verbose_name='Avatar')
 
     def follow(self, user):
         """ Follow """
