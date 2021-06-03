@@ -23,7 +23,8 @@ class Video(models.Model):
     title = models.CharField(max_length=255, verbose_name='Title')
     slug = models.SlugField(unique=True, verbose_name='Slug')
     description = models.TextField(verbose_name='Description')
-    author = models.ForeignKey('authorisation_user.AdvUser', on_delete=models.CASCADE, verbose_name='Author')
+    author = models.ForeignKey('authorisation_user.AdvUser', on_delete=models.CASCADE, verbose_name='Author',
+                               related_name='videos')
     file = models.FileField(verbose_name='Video')
     blocked = models.BooleanField(default=False, verbose_name='Blocked video')
     created_at = models.DateTimeField(auto_now_add=True, db_index=True, verbose_name='Published')

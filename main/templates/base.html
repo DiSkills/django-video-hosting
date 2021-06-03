@@ -32,7 +32,7 @@
                                 <a class="nav-link dropdown-toggle" id="accountDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Account</a>
                                 <ul class="dropdown-menu" aria-labelledby="accountDropdown">
                                     {% if user.is_authenticated %}
-                                        <li><a class="dropdown-item" href="{% url 'accounts:profile' %}">Profile</a></li>
+                                        <li><a class="dropdown-item" href="{% url 'accounts:profile' username=user.username %}">Profile</a></li>
                                         <li><a class="dropdown-item" href="{% url 'accounts:logout' %}">Logout</a></li>
                                     {% else %}
                                         <li><a class="dropdown-item" href="{% url 'accounts:login' %}">Login</a></li>
@@ -62,7 +62,9 @@
             {% block content %}
                 <div class="row mb-5">
                     {% for video in video_list %}
-                        {% include '_video_poster.html' %}
+                        <div class="col-md-3">
+                            {% include '_video_poster.html' %}
+                        </div>
                     {% endfor %}
                 </div>
             {% endblock content %}

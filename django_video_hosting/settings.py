@@ -142,5 +142,9 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 AUTH_USER_MODEL = 'authorisation_user.AdvUser'
 
 
+# Login redirect
+LOGIN_REDIRECT_URL = 'main:base'
+
+
 # Crispy forms
 CRISPY_TEMPLATE_PACK = 'bootstrap4'

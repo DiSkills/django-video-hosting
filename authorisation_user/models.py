@@ -13,11 +13,15 @@ class AdvUser(AbstractUser):
                                         related_name='subscribers')
 
     def follow(self, user):
+        """ Follow """
+
         if not self.is_following(user):
             self.subscriptions.add(user)
             user.subscribers.add(self)
 
     def unfollow(self, user):
+        """ Unfollow """
+
         if self.is_following(user):
             self.subscriptions.remove(user)
             user.subscribers.remove(self)

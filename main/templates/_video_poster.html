@@ -1,14 +1,12 @@
-<div class="col-md-3">
-    <div class="card h-100">
-        <img class="img-thumbnail" src="{{ video.preview.url }}" alt="">
-        <div class="card-body p-4">
-            <div class="text-center">
-                <a class="fw-bolder h5" href="{% url 'main:video_detail' slug=video.slug %}">{{ video.title }}</a>
-            </div>
-            <div class="text-center mt-5">
-                <a class="h5" href="#">{{ video.author }}</a>
-            </div>
+<div class="card h-100">
+    <img class="img-thumbnail" src="{{ video.preview.url }}" alt="">
+    <div class="card-body p-4">
+        <div class="text-center">
+            <a class="fw-bolder h5" href="{% url 'main:video_detail' slug=video.slug %}">{{ video.title }}</a>
         </div>
-        <div class="right">{{ video.created_at }}</div>
+        <div class="text-center mt-5">
+            <a class="h5" href="{% url 'accounts:profile' username=video.author.username %}">{{ video.author }}</a>
+        </div>
     </div>
+    <div class="right">{{ video.created_at }}</div>
 </div>

@@ -1,10 +1,11 @@
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.views import LoginView
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, Http404
 from django.views import View
 
 from .forms import RegistrationForm
+from .models import AdvUser
 
 
 class RegistrationView(View):
@@ -40,6 +41,7 @@ class LoginUserView(LoginView):
     """ Login """
 
     template_name = 'accounts/login.html'
+    redirect_authenticated_user = True
 
 
 class LogoutUserView(LoginRequiredMixin, View):
@@ -50,8 +52,27 @@ class LogoutUserView(LoginRequiredMixin, View):
         return redirect('main:base')
 
 
-class ProfileView(LoginRequiredMixin, View):
-    """ Profile """
+class ProfileView(View):
+    """ Profile user """
 
     def get(self, request, *args, **kwargs):
-        return redirect('main:base')
+        user = AdvUser.objects.filter(username=kwargs['username']).first()
+        if not user:
+            return Http404('Page not found')
+        context = {'account': user}
+        return render(request, 'accounts/profile.html', context)
+
+
+class FollowAndUnfollowView(LoginRequiredMixin, View):
+    """ Follow and Unfollow """
+
+    def get(self, request, *args, **kwargs):
+        user = AdvUser.objects.filter(username=kwargs['username']).first()
+        if not user:
+            return Http404('Page not found')
+        act = kwargs.get('act')
+        if act == 'follow':
+            request.user.follow(user)
+        elif act == 'unfollow':
+            request.user.unfollow(user)
+        return redirect('accounts:profile', username=user.username)

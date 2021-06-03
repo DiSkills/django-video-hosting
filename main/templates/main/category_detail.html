@@ -5,7 +5,9 @@
 {% block content %}
     <div class="row">
         {% for video in category.videos.all %}
-            {% include '_video_poster.html' %}
+            <div class="col-md-3">
+                {% include '_video_poster.html' %}
+            </div>
         {% endfor %}
     </div>
 {% endblock content %}

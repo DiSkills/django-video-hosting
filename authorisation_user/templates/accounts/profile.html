@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+
+{% block title %}Profile - {{ account.username }}{% endblock title %}
+
+{% block content %}
+    <div class="row mb-5">
+        <div class="col-8">
+            <div class="row">
+                <h1 class="text-center">{{ account.username.title }} videos <span class="badge rounded-pill bg-secondary">{{ account.videos.count }}</span></h1>
+                {% for video in account.videos.all %}
+                    <div class="col">
+                        {% include '_video_poster.html' %}
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+        <div class="col-4">
+            {% if account == user %}
+                <h1 class="text-center">Subscriptions</h1>
+                {% for subscription in account.subscriptions.all %}
+                    {{ subscription }}
+                {% endfor %}
+            {% else %}
+                <h1 class="text-center">Subscribers <span class="badge rounded-pill bg-danger">{{ account.subscribers.count }}</span></h1>
+                <a href="{% url 'accounts:act_profile' act='follow' username=account.username %}" class="btn btn-success">Follow</a>
+                <a href="{% url 'accounts:act_profile' act='unfollow' username=account.username %}" class="btn btn-success">Unfollow</a>
+            {% endif %}
+        </div>
+    </div>
+{% endblock content %}
