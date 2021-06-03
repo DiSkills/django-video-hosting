@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django_cleanup',
+    'crispy_forms',
     'main',
     'authorisation_user',
 ]
@@ -136,5 +137,10 @@ STATICFILES_DIRS = [
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
+
 # User Model
 AUTH_USER_MODEL = 'authorisation_user.AdvUser'
+
+
+# Crispy forms
+CRISPY_TEMPLATE_PACK = 'bootstrap4'
