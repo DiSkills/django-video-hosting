@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+
+{% block title %}{% endblock title %}
+
+{% block content %}
+    <div class="row">
+        <h1 class="text-center">Subscriptions: <span class="badge rounded-pill bg-secondary">{{ subscriptions.count }}</span></h1>
+    </div>
+    <div class="row mb-5">
+        {% for subscription in subscriptions %}
+            {% for video in subscription.videos.all %}
+                <div class="col-md-3">
+                    {% include '_video_poster.html' %}
+                </div>
+            {% endfor %}
+        {% endfor %}
+    </div>
+{% endblock content %}

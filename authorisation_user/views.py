@@ -76,3 +76,12 @@ class FollowAndUnfollowView(LoginRequiredMixin, View):
         elif act == 'unfollow':
             request.user.unfollow(user)
         return redirect('accounts:profile', username=user.username)
+
+
+class SubscriptionsView(LoginRequiredMixin, View):
+    """ Subscriptions """
+
+    def get(self, request, *args, **kwargs):
+        subscriptions = request.user.subscriptions.all()
+        context = {'subscriptions': subscriptions}
+        return render(request, 'accounts/subscriptions.html', context)

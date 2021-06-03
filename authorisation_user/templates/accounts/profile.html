@@ -1,5 +1,7 @@
 {% extends 'base.html' %}
 
+{% load follow_or_unfollow %}
+
 {% block title %}Profile - {{ account.username }}{% endblock title %}
 
 {% block content %}
@@ -16,14 +18,18 @@
         </div>
         <div class="col-4">
             {% if account == user %}
-                <h1 class="text-center">Subscriptions</h1>
+                <h1 class="text-center">Subscriptions <span class="badge rounded-pill bg-secondary">{{ account.subscriptions.count }}</span></h1>
                 {% for subscription in account.subscriptions.all %}
-                    {{ subscription }}
+                    <p>{{ subscription }}</p>
                 {% endfor %}
             {% else %}
                 <h1 class="text-center">Subscribers <span class="badge rounded-pill bg-danger">{{ account.subscribers.count }}</span></h1>
-                <a href="{% url 'accounts:act_profile' act='follow' username=account.username %}" class="btn btn-success">Follow</a>
-                <a href="{% url 'accounts:act_profile' act='unfollow' username=account.username %}" class="btn btn-success">Unfollow</a>
+                {% follow_or_unfollow account=account user=user as follow %}
+                {% if not follow %}
+                    <a href="{% url 'accounts:act_profile' act='follow' username=account.username %}" class="btn btn-danger">Follow</a>
+                {% else %}
+                    <a href="{% url 'accounts:act_profile' act='unfollow' username=account.username %}" class="btn btn-secondary">Unfollow</a>
+                {% endif %}
             {% endif %}
         </div>
     </div>
