@@ -1,14 +1,4 @@
 from django.db import models
-from django.contrib.auth.models import AbstractUser
-
-
-class AdvUser(AbstractUser):
-    """ User """
-    activated = models.BooleanField(default=False, verbose_name='User activated?')
-    send_messages = models.BooleanField(default=True, verbose_name='Send notification about new comments?')
-
-    class Meta(AbstractUser.Meta):
-        pass
 
 
 class Category(models.Model):
@@ -31,7 +21,7 @@ class Video(models.Model):
     title = models.CharField(max_length=255, verbose_name='Title')
     slug = models.SlugField(unique=True, verbose_name='Slug')
     description = models.TextField(verbose_name='Description')
-    author = models.ForeignKey(AdvUser, on_delete=models.CASCADE, verbose_name='Author')
+    author = models.ForeignKey('authorisation_user.AdvUser', on_delete=models.CASCADE, verbose_name='Author')
     file = models.FileField(verbose_name='Video')
     blocked = models.BooleanField(default=False, verbose_name='Blocked video')
     created_at = models.DateTimeField(auto_now_add=True, db_index=True, verbose_name='Published')

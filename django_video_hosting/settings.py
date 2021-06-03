@@ -37,7 +37,9 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django_cleanup',
     'main',
+    'authorisation_user',
 ]
 
 MIDDLEWARE = [
@@ -135,4 +137,4 @@ STATICFILES_DIRS = [
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # User Model
-AUTH_USER_MODEL = 'main.AdvUser'
+AUTH_USER_MODEL = 'authorisation_user.AdvUser'
