@@ -3,7 +3,7 @@
 <html lang="en">
     <head>
         <meta charset="UTF-8">
-        <title>Home</title>
+        <title>{% block title %}Home{% endblock title %}</title>
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet"
               integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
         <link rel="stylesheet" type="text/css" href="{% static 'main/style.css' %}">
@@ -14,7 +14,7 @@
             <!-- Navbar -->
             <nav class="navbar navbar-expand-lg navbar-dark text-light bg-dark mb-2">
                 <div class="container px-4 px-lg-5">
-                    <a class="navbar-brand" href="#">Django 3 Anti YouTube</a>
+                    <a class="navbar-brand" href="{% url 'main:base' %}">Django 3 Anti YouTube</a>
                      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
                     <div class="collapse navbar-collapse" id="navbarSupportedContent">
                         <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4">
@@ -24,7 +24,7 @@
                                 <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Categories</a>
                                 <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
                                     {% for category in categories %}
-                                        <li><a class="dropdown-item" href="#">{{ category.name }} <span class="badge rounded-pill bg-secondary">{{ category.videos.count }}</span></a></li>
+                                        <li><a class="dropdown-item" href="{% url 'main:category_detail' slug=category.slug %}">{{ category.name }} <span class="badge rounded-pill bg-secondary">{{ category.videos.count }}</span></a></li>
                                     {% endfor %}
                                 </ul>
                             </li>
@@ -50,20 +50,7 @@
             {% block content %}
                 <div class="row mb-5">
                     {% for video in video_list %}
-                        <div class="col-md-3">
-                            <div class="card h-100">
-                                <img class="img-thumbnail" src="{{ video.preview.url }}" alt="">
-                                <div class="card-body p-4">
-                                    <div class="text-center">
-                                        <a class="fw-bolder h5" href="{% url 'main:video_detail' slug=video.slug %}">{{ video.title }}</a>
-                                    </div>
-                                    <div class="text-center mt-5">
-                                        <a class="h5" href="#">{{ video.author }}</a>
-                                    </div>
-                                </div>
-                                <div class="right">{{ video.created_at }}</div>
-                            </div>
-                        </div>
+                        {% include '_video_poster.html' %}
                     {% endfor %}
                 </div>
             {% endblock content %}

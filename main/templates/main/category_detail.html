@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ category.name }} - Category{% endblock title %}
+
+{% block content %}
+    <div class="row">
+        {% for video in category.videos.all %}
+            {% include '_video_poster.html' %}
+        {% endfor %}
+    </div>
+{% endblock content %}

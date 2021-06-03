@@ -2,7 +2,7 @@ from django.http import FileResponse
 from django.shortcuts import render, redirect
 from django.views.generic import ListView, DetailView, View
 
-from .models import Video
+from .models import Video, Category
 
 
 class BaseView(ListView):
@@ -12,13 +12,23 @@ class BaseView(ListView):
     template_name = 'base.html'
 
 
+class CategoryDetailView(DetailView):
+    """ Category Detail """
+
+    model = Category
+    queryset = Category.objects.all()
+    context_object_name = 'category'
+    template_name = 'main/category_detail.html'
+    slug_url_kwarg = 'slug'
+
+
 class VideoDetailView(DetailView):
     """ Detail video """
 
     model = Video
     queryset = Video.objects.all()
     context_object_name = 'video'
-    template_name = 'video_detail.html'
+    template_name = 'main/video_detail.html'
     slug_url_kwarg = 'slug'
 
 
