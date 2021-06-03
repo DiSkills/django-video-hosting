@@ -1,20 +1,19 @@
 <div class="row">
-    <video style="width: 850px;" class="video" controls preload="none" poster="{{ video.preview.url }}">
+    <video style="width: 850px; height: 460px;" class="video" controls preload="none" poster="{{ video.preview.url }}">
         <source src="{% url 'main:video_streaming' slug=video.slug %}" type="video/mp4">
     </video>
     <div class="col text-center">
-        Author: {{ video.author }}
+        Author: <br> <img style="width: 80px;" class="img-fluid" src="{{ video.author.avatar.url }}" alt="">
+        <a href="{% url 'accounts:profile' username=video.author.username %}">{{ video.author.username }}</a>
     </div>
     <div class="col text-center">
-        Category: {{ video.category }}
+        Category: <br> <a href="{% url 'main:category_detail' slug=video.category.slug %}">{{ video.category.name }}</a>
+        <span class="badge rounded-pill bg-secondary">{{ video.category.videos.count }}</span>
     </div>
+    <div class="right">{{ video.created_at }}</div>
 </div>
 <div class="row">
     <p class="h3 text-center">{{ video.title }}</p>
     <p class="mt-2">Description:</p>
     <div class="margin-left"><p>{{ video.description }}</p></div>
-</div>
-<div class="row">
-    <div class="col-md-9"></div>
-    <div class="col-md-3 right">{{ video.created_at }}</div>
 </div>

@@ -30,6 +30,7 @@ class RegistrationView(View):
             new_user.last_name = form.cleaned_data['last_name']
             new_user.send_messages = form.cleaned_data['send_messages']
             new_user.avatar = form.cleaned_data['avatar']
+            new_user.about = form.cleaned_data['about']
             new_user.save()
             new_user.set_password(form.cleaned_data['password'])
             new_user.save()

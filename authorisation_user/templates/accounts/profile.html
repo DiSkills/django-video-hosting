@@ -9,12 +9,17 @@
         <div class="col-8">
             <div class="row text-center mb-2">
                 <div class="col">
-                    <img style="width: 200px;" class="img-fluid" src="{{ account.avatar.url }}" alt="">
+                    <img style="width: 200px;" class="img-fluid pb-2" src="{{ account.avatar.url }}" alt=""><br>
+                    <a href="{% url 'accounts:profile_change' %}"><button class="btn btn-primary">Change profile</button></a>
                 </div>
-                <div class="col h1">
-                    {{ account.username.title }} videos <span class="badge rounded-pill bg-secondary">{{ account.videos.count }}</span>
+                <div class="col">
+                    <span class="h1">{{ account.username.title }} videos <span class="badge rounded-pill bg-secondary">{{ account.videos.count }}</span><br></span>
+                    {% if account.about %}
+                        <p class="h5">{{ account.about }}</p>
+                    {% endif %}
                 </div>
             </div>
+            <hr>
             <div class="row">
                 {% for video in account.videos.all %}
                     <div class="col">
@@ -26,17 +31,30 @@
         <div class="col-4">
             {% if account == user %}
                 <h1 class="text-center">Subscriptions <span class="badge rounded-pill bg-secondary">{{ account.subscriptions.count }}</span></h1>
+                <hr>
                 {% for subscription in account.subscriptions.all %}
-                    <p>{{ subscription }}</p>
+                    <div class="row text-center">
+                        <div class="col">
+                            <a href="{% url 'accounts:profile' username=subscription.username %}"><img style="width: 80px;" class="img-fluid" src="{{ subscription.avatar.url }}" alt=""></a>
+                        </div>
+                        <div class="col">
+                            <a href="{% url 'accounts:profile' username=subscription.username %}">{{ subscription.username.title }}</a><br>
+                            Subscribers: <span class="badge rounded-pill bg-danger">{{ subscription.subscribers.count }}</span><br>
+                            Videos: <span class="badge rounded-pill bg-secondary">{{ subscription.videos.count }}</span>
+                        </div>
+                    </div>
+                    <hr>
                 {% endfor %}
             {% else %}
                 <h1 class="text-center">Subscribers <span class="badge rounded-pill bg-danger">{{ account.subscribers.count }}</span></h1>
-                {% follow_or_unfollow account=account user=user as follow %}
-                {% if not follow %}
-                    <a href="{% url 'accounts:act_profile' act='follow' username=account.username %}" class="btn btn-danger">Follow</a>
-                {% else %}
-                    <a href="{% url 'accounts:act_profile' act='unfollow' username=account.username %}" class="btn btn-secondary">Unfollow</a>
-                {% endif %}
+                <div class="row">
+                    {% follow_or_unfollow account=account user=user as follow %}
+                    {% if not follow %}
+                        <a href="{% url 'accounts:act_profile' act='follow' username=account.username %}" class="btn btn-danger">Follow</a>
+                    {% else %}
+                        <a href="{% url 'accounts:act_profile' act='unfollow' username=account.username %}" class="btn btn-secondary">Unfollow</a>
+                    {% endif %}
+                </div>
             {% endif %}
         </div>
     </div>

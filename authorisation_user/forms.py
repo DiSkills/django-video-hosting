@@ -12,6 +12,7 @@ class RegistrationForm(forms.ModelForm):
     password = forms.CharField(label='Password', widget=forms.PasswordInput,
                                help_text=password_validation.password_validators_help_text_html())
     repeat_password = forms.CharField(label='Password (again)', widget=forms.PasswordInput, help_text='Password again')
+    avatar = forms.FileField(widget=forms.FileInput)
 
     def clean_password(self):
         password = self.cleaned_data['password']
@@ -41,15 +42,16 @@ class RegistrationForm(forms.ModelForm):
 
     class Meta:
         model = AdvUser
-        fields = ('username', 'email', 'password', 'repeat_password', 'first_name', 'last_name',
-                  'send_messages', 'avatar')
+        fields = ('avatar', 'username', 'email', 'password', 'repeat_password', 'first_name', 'last_name',
+                  'send_messages', 'about')
 
 
 class ChangeProfileForm(forms.ModelForm):
     """ Profile change """
 
     email = forms.EmailField(required=True, label='Email')
+    avatar = forms.FileField(widget=forms.FileInput)
 
     class Meta:
         model = AdvUser
-        fields = ('username', 'email', 'first_name', 'last_name', 'send_messages', 'avatar')
+        fields = ('avatar', 'username', 'email', 'first_name', 'last_name', 'send_messages', 'about')
