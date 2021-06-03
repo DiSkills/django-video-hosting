@@ -31,9 +31,15 @@ class RegistrationView(View):
             new_user.save()
             user = authenticate(username=new_user.username, password=form.cleaned_data['password'])
             login(request, user)
-            return redirect('main:base')
+            return redirect('accounts:profile')
         context = {'form': form}
         return render(request, 'accounts/registration.html', context)
+
+
+class LoginUserView(LoginView):
+    """ Login """
+
+    template_name = 'accounts/login.html'
 
 
 class LogoutUserView(LoginRequiredMixin, View):
@@ -41,4 +47,11 @@ class LogoutUserView(LoginRequiredMixin, View):
 
     def get(self, request, *args, **kwargs):
         logout(request)
+        return redirect('main:base')
+
+
+class ProfileView(LoginRequiredMixin, View):
+    """ Profile """
+
+    def get(self, request, *args, **kwargs):
         return redirect('main:base')
