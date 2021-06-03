@@ -3,6 +3,7 @@ from django.db import models
 
 class Category(models.Model):
     """ Category """
+
     name = models.CharField(max_length=255, verbose_name='Name category')
     slug = models.SlugField(unique=True, verbose_name='Slug')
 
@@ -17,6 +18,7 @@ class Category(models.Model):
 
 class Video(models.Model):
     """ Video """
+
     category = models.ForeignKey(Category, on_delete=models.PROTECT, verbose_name='Category', related_name='videos')
     title = models.CharField(max_length=255, verbose_name='Title')
     slug = models.SlugField(unique=True, verbose_name='Slug')
