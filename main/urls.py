@@ -7,6 +7,7 @@ from .views import (
     CategoryDetailView,
     AddVideoView,
     EditVideoView,
+    LikeOrDislikeView,
 )
 
 app_name = 'main'
@@ -17,4 +18,5 @@ urlpatterns = [
     path('video/<str:slug>/', VideoDetailView.as_view(), name='video_detail'),
     path('video/streaming/<str:slug>/', VideoStreamingResponse.as_view(), name='video_streaming'),
     path('category/<str:slug>/', CategoryDetailView.as_view(), name='category_detail'),
+    path('likes-or-dislikes/<str:slug>', LikeOrDislikeView.as_view(), name='likes_or_dislikes'),
 ]

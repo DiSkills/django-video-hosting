@@ -4,7 +4,7 @@ from django.shortcuts import render, redirect
 from django.views.generic import ListView, DetailView, View
 from django.views.generic.edit import UpdateView
 
-from .models import Video, Category
+from .models import Video, Category, LikeOrDislike
 from .forms import AddVideoForm, EditVideoForm
 from .send_mail import send_manager_about_new_video
 
@@ -78,3 +78,17 @@ class EditVideoView(LoginRequiredMixin, UpdateView):
     template_name = 'main/edit_video.html'
     form_class = EditVideoForm
     slug_url_kwarg = 'slug'
+
+
+class LikeOrDislikeView(LoginRequiredMixin, View):
+    """ Likes and Dislikes """
+
+    def post(self, request, *args, **kwargs):
+        slug = kwargs['slug']
+        video = Video.objects.get(slug=slug)
+        act = request.POST.get('act')
+        user = request.user
+        vote, created = LikeOrDislike.objects.get_or_create(user=user, video=video)
+        vote.vote = act
+        vote.save()
+        return redirect('main:video_detail', slug=slug)

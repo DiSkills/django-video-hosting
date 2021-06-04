@@ -17,3 +17,7 @@
     width: 850px;
     height: 460px;
 }
+
+input[type=radio].radio {
+    display: none;
+}

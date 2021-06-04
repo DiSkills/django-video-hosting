@@ -45,3 +45,19 @@ class Video(models.Model):
         verbose_name = 'Video'
         verbose_name_plural = 'Videos'
         ordering = ['-created_at']
+
+
+class LikeOrDislike(models.Model):
+    """ Like """
+
+    vote = models.CharField(max_length=10, verbose_name='Vote')
+    video = models.ForeignKey(Video, verbose_name='Video', on_delete=models.CASCADE, related_name='votes')
+    user = models.ForeignKey('authorisation_user.AdvUser', verbose_name='User', on_delete=models.CASCADE,
+                             related_name='vote')
+
+    def __str__(self):
+        return f'{self.user.username} - {self.vote}'
+
+    class Meta:
+        verbose_name = 'Like or Dislike'
+        verbose_name_plural = 'Likes or Dislikes'

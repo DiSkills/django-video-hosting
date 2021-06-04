@@ -1,18 +1,44 @@
+{% load video %}
 <div class="row">
     <video class="video" controls preload="none" poster="{{ video.preview.url }}">
         <source src="{% url 'main:video_streaming' slug=video.slug %}" type="video/mp4">
     </video>
+
     <div class="col text-center">
         Author: <br> <img class="img-80 img-fluid" src="{{ video.author.avatar.url }}" alt="">
         <a href="{% url 'accounts:profile' username=video.author.username %}">{{ video.author.username }}</a>
     </div>
+
     <div class="col text-center">
         Category: <br> <a href="{% url 'main:category_detail' slug=video.category.slug %}">{{ video.category.name }}</a>
         <span class="badge rounded-pill bg-secondary">{{ video.category.videos.count }}</span>
     </div>
-    {% if user == video.author %}<a class="mt-2 btn btn-primary" href="{% url 'main:edit_video' slug=video.slug %}">Edit</a>{% endif %}
+
+    {% if user == video.author %}
+        <a class="mt-2 btn btn-primary" href="{% url 'main:edit_video' slug=video.slug %}">Edit</a>
+    {% endif %}
+
     <div class="right">{{ video.created_at }}</div>
+
+    <form class="act" action="{% url 'main:likes_or_dislikes' slug=video.slug %}" method="post">
+        {% csrf_token %}
+        {% get_vote_user user=user video=video as vote %}
+        <label for="like_id">
+            👍 <span class="badge rounded-pill {% if vote == 'like' %}bg-danger{% else %}bg-secondary{% endif %}">
+                    {% likes_or_dislikes_count video=video vote='like' %}
+               </span>
+        </label>
+        <input id="like_id" class="like_or_dislike radio" type="radio" name="act" value="like">
+        <label for="dislike_id">
+            👎 <span class="badge rounded-pill {% if vote == 'dislike' %}bg-danger{% else %}bg-secondary{% endif %}">
+                    {% likes_or_dislikes_count video=video vote='dislike' %}
+               </span>
+        </label>
+        <input id="dislike_id" class="like_or_dislike radio" type="radio" name="act" value="dislike">
+    </form>
+
 </div>
+
 <div class="row">
     <p class="h3 text-center">{{ video.title }}</p>
     <p class="mt-2">Description:</p>
