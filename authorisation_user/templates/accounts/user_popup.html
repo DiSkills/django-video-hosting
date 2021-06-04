@@ -1,7 +1,7 @@
 {% load follow_or_unfollow %}
 <div class="row">
     <div class="col">
-        <img class="img-80 img-fluid" src="{{ account.avatar.url }}" alt="">
+        <a href="{% url 'accounts:profile' username=account.username %}"><img class="img-80 img-fluid" src="{{ account.avatar.url }}" alt=""></a>
     </div>
     <div class="col">
         <a href="{% url 'accounts:profile' username=account.username %}">{{ account.username }}</a>

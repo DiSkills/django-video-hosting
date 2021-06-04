@@ -5,8 +5,8 @@
     </div>
     <ul class="list-group">
         <li class="list-group-item">
-            <img class="img-80 img-fluid" src="{{ video.author.avatar.url }}" alt="">
             <span class="user_popup">
+                <img class="img-80 img-fluid" src="{{ video.author.avatar.url }}" alt="">
                 <a class="h5" href="{% url 'accounts:profile' username=video.author.username %}">{{ video.author }}</a>
             </span>
         </li>

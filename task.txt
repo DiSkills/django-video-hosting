@@ -3,7 +3,6 @@ Reset password
 Add history video
 Like and dislike
 Search
-(Create list subscriptions on subscriptions page) or (create dropdown with subscriptions)
 Tree comments
 email send all users with True mail_send
 admin panel
