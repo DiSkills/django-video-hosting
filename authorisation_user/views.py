@@ -1,6 +1,6 @@
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.contrib.auth.views import LoginView
+from django.contrib.auth.views import LoginView, PasswordChangeView
 from django.urls import reverse_lazy
 from django.views.generic.edit import UpdateView
 from django.shortcuts import render, redirect, Http404, get_object_or_404
@@ -64,6 +64,13 @@ class ChangeProfileView(LoginRequiredMixin, UpdateView):
         if not queryset:
             queryset = self.get_queryset()
         return get_object_or_404(queryset, pk=self.user_id)
+
+
+class ChangePasswordView(LoginRequiredMixin, PasswordChangeView):
+    """ Change Password User """
+
+    template_name = 'accounts/change_password.html'
+    success_url = reverse_lazy('main:base')
 
 
 class LogoutUserView(LoginRequiredMixin, View):

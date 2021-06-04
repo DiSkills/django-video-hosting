@@ -22,7 +22,7 @@
             <hr>
             <div class="row">
                 {% for video in account.videos.all %}
-                    <div class="col">
+                    <div class="col-3">
                         {% include '_video_poster.html' %}
                     </div>
                 {% endfor %}
@@ -46,15 +46,17 @@
                     <hr>
                 {% endfor %}
             {% else %}
-                <h1 class="text-center">Subscribers <span class="badge rounded-pill bg-danger">{{ account.subscribers.count }}</span></h1>
-                <div class="row">
-                    {% follow_or_unfollow account=account user=user as follow %}
-                    {% if not follow %}
-                        <a href="{% url 'accounts:act_profile' act='follow' username=account.username %}" class="btn btn-danger">Follow</a>
-                    {% else %}
-                        <a href="{% url 'accounts:act_profile' act='unfollow' username=account.username %}" class="btn btn-secondary">Unfollow</a>
-                    {% endif %}
-                </div>
+                {% if user.is_authenticated %}
+                    <h1 class="text-center">Subscribers <span class="badge rounded-pill bg-danger">{{ account.subscribers.count }}</span></h1>
+                    <div class="row">
+                        {% follow_or_unfollow account=account user=user as follow %}
+                        {% if not follow %}
+                            <a href="{% url 'accounts:act_profile' act='follow' username=account.username %}" class="btn btn-danger">Follow</a>
+                        {% else %}
+                            <a href="{% url 'accounts:act_profile' act='unfollow' username=account.username %}" class="btn btn-secondary">Unfollow</a>
+                        {% endif %}
+                    </div>
+                {% endif %}
             {% endif %}
         </div>
     </div>

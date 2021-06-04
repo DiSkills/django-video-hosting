@@ -1,13 +1,13 @@
-<div class="card h-100">
-    <a href="{% url 'main:video_detail' slug=video.slug %}"><img class="img-thumbnail" src="{{ video.preview.url }}" alt=""></a>
+<div class="card pb-2 h-100">
+    <a href="{% url 'main:video_detail' slug=video.slug %}"><img class="card-img-top" src="{{ video.preview.url }}" alt=""></a>
     <div class="card-body">
-        <div class="text-center">
-            <a class="fw-bolder h5" href="{% url 'main:video_detail' slug=video.slug %}">{{ video.title }}</a>
-        </div>
-        <div class="mt-5">
+        <a class="card-title h5" href="{% url 'main:video_detail' slug=video.slug %}">{{ video.title }}</a>
+    </div>
+    <ul class="list-group">
+        <li class="list-group-item">
             <img class="img-80 img-fluid" src="{{ video.author.avatar.url }}" alt="">
             <a class="h5" href="{% url 'accounts:profile' username=video.author.username %}">{{ video.author }}</a>
-        </div>
-    </div>
-    <div class="right">{{ video.created_at }}</div>
+        </li>
+    <li class="right list-group-item">{{ video.created_at }}</li>
+    </ul>
 </div>
