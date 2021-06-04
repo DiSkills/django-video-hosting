@@ -1,5 +1,8 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
+from django.urls import reverse
+
+from main.utilities import get_timestamp_path
 
 
 class AdvUser(AbstractUser):
@@ -11,7 +14,7 @@ class AdvUser(AbstractUser):
                                           related_name='subscriptions')
     subscriber = models.ManyToManyField('AdvUser', verbose_name='Subscribers', blank=True,
                                         related_name='subscribers')
-    avatar = models.ImageField(verbose_name='Avatar')
+    avatar = models.ImageField(verbose_name='Avatar', upload_to=get_timestamp_path)
     about = models.CharField(max_length=255, verbose_name='About me', blank=True, null=True)
 
     def follow(self, user):
@@ -32,6 +35,11 @@ class AdvUser(AbstractUser):
         """ Is following user """
 
         return self.subscriptions.filter(username=user.username).count() > 0
+
+    def get_absolute_url(self):
+        """ Get absolute url """
+
+        return reverse('accounts:profile', kwargs={'username': self.username})
 
     class Meta(AbstractUser.Meta):
         pass

@@ -9,6 +9,7 @@ from .views import (
     SubscriptionsView,
     ChangeProfileView,
     ChangePasswordView,
+    RedirectProfileView,
 )
 
 app_name = 'accounts'
@@ -16,6 +17,7 @@ urlpatterns = [
     path('registration/', RegistrationView.as_view(), name='registration'),
     path('login/', LoginUserView.as_view(), name='login'),
     path('logout/', LogoutUserView.as_view(), name='logout'),
+    path('profile/', RedirectProfileView.as_view(), name='profile_redirect'),
     path('profile/change/password/', ChangePasswordView.as_view(), name='password_change'),
     path('profile/change/', ChangeProfileView.as_view(), name='profile_change'),
     path('profile/<str:username>/', ProfileView.as_view(), name='profile'),

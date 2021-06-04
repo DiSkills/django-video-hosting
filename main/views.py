@@ -1,8 +1,12 @@
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http import FileResponse
 from django.shortcuts import render, redirect
 from django.views.generic import ListView, DetailView, View
+from django.views.generic.edit import UpdateView
 
 from .models import Video, Category
+from .forms import AddVideoForm, EditVideoForm
+from .send_mail import send_manager_about_new_video
 
 
 class BaseView(ListView):
@@ -39,3 +43,38 @@ class VideoStreamingResponse(View):
         video = Video.objects.get(slug=kwargs['slug'])
         response = FileResponse(open(video.file.path, 'rb'))
         return response
+
+
+class AddVideoView(LoginRequiredMixin, View):
+    """ Add video """
+
+    def get(self, request, *args, **kwargs):
+        form = AddVideoForm(request.POST or None)
+        context = {'form': form}
+        return render(request, 'main/add_video.html', context)
+
+    def post(self, request, *args, **kwargs):
+        form = AddVideoForm(request.POST or None, request.FILES or None)
+        if form.is_valid():
+            new_video = form.save(commit=False)
+            new_video.category = form.cleaned_data['category']
+            new_video.title = form.cleaned_data['title']
+            new_video.slug = form.cleaned_data['slug']
+            new_video.description = form.cleaned_data['description']
+            new_video.preview = form.cleaned_data['preview']
+            new_video.file = form.cleaned_data['file']
+            new_video.author = request.user
+            new_video.save()
+            send_manager_about_new_video(new_video)
+            return redirect('main:video_detail', slug=new_video.slug)
+        context = {'form': form}
+        return render(request, 'main/add_video.html', context)
+
+
+class EditVideoView(LoginRequiredMixin, UpdateView):
+    """ Edit video """
+
+    model = Video
+    template_name = 'main/edit_video.html'
+    form_class = EditVideoForm
+    slug_url_kwarg = 'slug'

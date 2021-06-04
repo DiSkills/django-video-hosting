@@ -10,6 +10,7 @@
         Category: <br> <a href="{% url 'main:category_detail' slug=video.category.slug %}">{{ video.category.name }}</a>
         <span class="badge rounded-pill bg-secondary">{{ video.category.videos.count }}</span>
     </div>
+    {% if user == video.author %}<a class="mt-2 btn btn-primary" href="{% url 'main:edit_video' slug=video.slug %}">Edit</a>{% endif %}
     <div class="right">{{ video.created_at }}</div>
 </div>
 <div class="row">

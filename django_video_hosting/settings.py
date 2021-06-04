@@ -148,9 +148,13 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 AUTH_USER_MODEL = 'authorisation_user.AdvUser'
 
 
-# Login redirect
-LOGIN_REDIRECT_URL = 'main:base'
-
-
 # Crispy forms
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
+
+
+# Email
+DEFAULT_FROM_EMAIL = os.environ.get('DEFAULT_FROM_EMAIL')
+EMAIL_PORT = 1025
+MANAGERS = [
+    ('admin', 'admin@admin.admin')
+]

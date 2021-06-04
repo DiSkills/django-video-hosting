@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+
+{% load crispy_forms_tags %}
+
+{% block title %}Add video{% endblock title %}
+
+{% block content %}
+    <div class="row">
+        <h1 class="text-center">Add new video</h1>
+        <form action="{% url 'main:add_video' %}" method="post" enctype='multipart/form-data'>
+            {% csrf_token %}
+            {{ form|crispy }}
+            <input type="submit" class="mt-2 btn btn-success" value="Add">
+        </form>
+    </div>
+{% endblock content %}

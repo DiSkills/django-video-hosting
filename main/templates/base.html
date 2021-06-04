@@ -42,6 +42,9 @@
                                     {% endif %}
                                 </ul>
                             </li>
+                            {% if user.is_authenticated %}
+                                <li class="nav-item"><a class="nav-link" href="{% url 'main:add_video' %}">Add video</a></li>
+                            {% endif %}
                             {% comment %} Next content nav {% endcomment %}
                         </ul>
                     </div>

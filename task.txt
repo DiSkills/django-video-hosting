@@ -1,11 +1,10 @@
 Fix problem with range video (!!!)
 Reset password
 Add history video
-Create upload video for user and edit
-Email send admin about a new video for moderation
-email send all users with True mail_send
 Add user popup
 Like and dislike
 Search
 (Create list subscriptions on subscriptions page) or (create dropdown with subscriptions)
 Tree comments
+email send all users with True mail_send
+admin panel

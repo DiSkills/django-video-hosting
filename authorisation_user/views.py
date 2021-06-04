@@ -10,6 +10,13 @@ from .forms import RegistrationForm, ChangeProfileForm
 from .models import AdvUser
 
 
+class RedirectProfileView(View):
+    """ Redirect after login """
+
+    def get(self, request, *args, **kwargs):
+        return redirect('accounts:profile', username=request.user.username)
+
+
 class RegistrationView(View):
     """ Registration """
 
@@ -54,7 +61,6 @@ class ChangeProfileView(LoginRequiredMixin, UpdateView):
     model = AdvUser
     template_name = 'accounts/profile_change.html'
     form_class = ChangeProfileForm
-    success_url = reverse_lazy('main:base')
 
     def setup(self, request, *args, **kwargs):
         self.user_id = request.user.pk
