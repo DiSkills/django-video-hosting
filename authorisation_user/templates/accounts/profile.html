@@ -10,7 +10,9 @@
             <div class="row text-center mb-2">
                 <div class="col">
                     <img class="img-200 img-fluid pb-2" src="{{ account.avatar.url }}" alt=""><br>
-                    <a href="{% url 'accounts:profile_change' %}"><button class="btn btn-primary">Change profile</button></a>
+                    {% if account == user %}
+                        <a href="{% url 'accounts:profile_change' %}"><button class="btn btn-primary">Change profile</button></a>
+                    {% endif %}
                 </div>
                 <div class="col">
                     <span class="h1">{{ account.username.title }} videos <span class="badge rounded-pill bg-secondary">{{ account.videos.count }}</span><br></span>

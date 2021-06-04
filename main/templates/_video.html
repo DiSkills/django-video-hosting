@@ -22,7 +22,9 @@
 
     <form class="act" action="{% url 'main:likes_or_dislikes' slug=video.slug %}" method="post">
         {% csrf_token %}
-        {% get_vote_user user=user video=video as vote %}
+        {% if user.is_authenticated %}
+            {% get_vote_user user=user video=video as vote %}
+        {% endif %}
         <label for="like_id">
             👍 <span class="badge rounded-pill {% if vote == 'like' %}bg-danger{% else %}bg-secondary{% endif %}">
                     {% likes_or_dislikes_count video=video vote='like' %}
