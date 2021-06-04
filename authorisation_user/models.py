@@ -29,6 +29,8 @@ class AdvUser(AbstractUser):
             user.subscribers.remove(self)
 
     def is_following(self, user):
+        """ Is following user """
+
         return self.subscriptions.filter(username=user.username).count() > 0
 
     class Meta(AbstractUser.Meta):

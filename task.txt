@@ -1,2 +1,14 @@
 Fix problem with range video (!!!)
 Change password
+Reset password
+Add history video
+Os environ config settings
+Create upload video for user and edit
+Email send admin about a new video for moderation
+email send all users with True mail_send
+Add user popup
+Like and dislike
+Search
+(Create list subscriptions on subscriptions page) or (create dropdown with subscriptions)
+
+ALL styles in .html add to .css

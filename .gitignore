@@ -15,7 +15,6 @@ db.sqlite3
 db.sqlite3-journal
 *.db
 /media
-/static
 static/
 
 /.idea

@@ -1,9 +1,9 @@
 <div class="row">
-    <video style="width: 850px; height: 460px;" class="video" controls preload="none" poster="{{ video.preview.url }}">
+    <video class="video" controls preload="none" poster="{{ video.preview.url }}">
         <source src="{% url 'main:video_streaming' slug=video.slug %}" type="video/mp4">
     </video>
     <div class="col text-center">
-        Author: <br> <img style="width: 80px;" class="img-fluid" src="{{ video.author.avatar.url }}" alt="">
+        Author: <br> <img class="img-80 img-fluid" src="{{ video.author.avatar.url }}" alt="">
         <a href="{% url 'accounts:profile' username=video.author.username %}">{{ video.author.username }}</a>
     </div>
     <div class="col text-center">

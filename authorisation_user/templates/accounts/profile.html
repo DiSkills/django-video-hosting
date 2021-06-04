@@ -9,7 +9,7 @@
         <div class="col-8">
             <div class="row text-center mb-2">
                 <div class="col">
-                    <img style="width: 200px;" class="img-fluid pb-2" src="{{ account.avatar.url }}" alt=""><br>
+                    <img class="img-200 img-fluid pb-2" src="{{ account.avatar.url }}" alt=""><br>
                     <a href="{% url 'accounts:profile_change' %}"><button class="btn btn-primary">Change profile</button></a>
                 </div>
                 <div class="col">
@@ -35,7 +35,7 @@
                 {% for subscription in account.subscriptions.all %}
                     <div class="row text-center">
                         <div class="col">
-                            <a href="{% url 'accounts:profile' username=subscription.username %}"><img style="width: 80px;" class="img-fluid" src="{{ subscription.avatar.url }}" alt=""></a>
+                            <a href="{% url 'accounts:profile' username=subscription.username %}"><img class="img-80 img-fluid" src="{{ subscription.avatar.url }}" alt=""></a>
                         </div>
                         <div class="col">
                             <a href="{% url 'accounts:profile' username=subscription.username %}">{{ subscription.username.title }}</a><br>

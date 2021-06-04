@@ -1,5 +1,5 @@
-<!DOCTYPE html>
 {% load static %}
+<!DOCTYPE html>
 <html lang="en">
     <head>
         <meta charset="UTF-8">
@@ -61,7 +61,7 @@
             </div>
 
             {% block content %}
-                <div class="row mb-5">
+                <div class="row">
                     {% for video in video_list %}
                         <div class="col-md-3">
                             {% include '_video_poster.html' %}
@@ -73,7 +73,7 @@
 
         {% block footer %}
             <!-- Footer -->
-            <footer class="py-5 bg-dark">
+            <footer class="mt-5 py-5 bg-dark">
                 <div class="container">
                     <p class="m-0 text-center text-light">Copyright &copy; Anti YouTube 2021</p>
                 </div>
