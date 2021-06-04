@@ -120,3 +120,12 @@ class SubscriptionsView(LoginRequiredMixin, View):
         subscriptions = request.user.subscriptions.all()
         context = {'subscriptions': subscriptions}
         return render(request, 'accounts/subscriptions.html', context)
+
+
+class UserPopupView(View):
+    """ User popup """
+
+    def get(self, request, *args, **kwargs):
+        user = AdvUser.objects.get(username=kwargs['username'])
+        context = {'account': user}
+        return render(request, 'accounts/user_popup.html', context)

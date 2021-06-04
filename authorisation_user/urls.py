@@ -10,6 +10,7 @@ from .views import (
     ChangeProfileView,
     ChangePasswordView,
     RedirectProfileView,
+    UserPopupView,
 )
 
 app_name = 'accounts'
@@ -20,7 +21,8 @@ urlpatterns = [
     path('profile/', RedirectProfileView.as_view(), name='profile_redirect'),
     path('profile/change/password/', ChangePasswordView.as_view(), name='password_change'),
     path('profile/change/', ChangeProfileView.as_view(), name='profile_change'),
+    path('profile/<str:username>/popup/', UserPopupView.as_view(), name='user_popup'),
     path('profile/<str:username>/', ProfileView.as_view(), name='profile'),
-    path('profile/<str:act>/<str:username>', FollowAndUnfollowView.as_view(), name='act_profile'),
+    path('profile/<str:act>/<str:username>/', FollowAndUnfollowView.as_view(), name='act_profile'),
     path('subscriptions/', SubscriptionsView.as_view(), name='subscriptions'),
 ]

@@ -1,0 +1,23 @@
+{% load follow_or_unfollow %}
+<div class="row">
+    <div class="col">
+        <img class="img-80 img-fluid" src="{{ account.avatar.url }}" alt="">
+    </div>
+    <div class="col">
+        <a href="{% url 'accounts:profile' username=account.username %}">{{ account.username }}</a>
+        {% if account.about %}<p>{{ account.about }}</p>{% endif %}
+    </div>
+    <div class="row">
+        <p>Subscribers: <span class="badge rounded-pill bg-secondary">{{ account.subscribers.count }}</span></p>
+        {% if user.is_authenticated %}
+            {% if account != user %}
+                {% follow_or_unfollow account=account user=user as follow %}
+                {% if not follow %}
+                    <a href="{% url 'accounts:act_profile' act='follow' username=account.username %}" class="btn btn-danger">Follow</a>
+                {% else %}
+                    <a href="{% url 'accounts:act_profile' act='unfollow' username=account.username %}" class="btn btn-secondary">Unfollow</a>
+                {% endif %}
+            {% endif %}
+        {% endif %}
+    </div>
+</div>

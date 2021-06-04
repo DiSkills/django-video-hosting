@@ -6,7 +6,9 @@
     <ul class="list-group">
         <li class="list-group-item">
             <img class="img-80 img-fluid" src="{{ video.author.avatar.url }}" alt="">
-            <a class="h5" href="{% url 'accounts:profile' username=video.author.username %}">{{ video.author }}</a>
+            <span class="user_popup">
+                <a class="h5" href="{% url 'accounts:profile' username=video.author.username %}">{{ video.author }}</a>
+            </span>
         </li>
     <li class="right list-group-item">{{ video.created_at }}</li>
     </ul>
