@@ -1,10 +1,13 @@
 {% extends 'base.html' %}
 
+{% load video %}
+
 {% block title %}{{ category.name }} - Category{% endblock title %}
 
 {% block content %}
     <div class="row">
-        {% for video in category.videos.all %}
+        {% filter_private_videos videos=category.videos.all as videos %}
+        {% for video in videos %}
             <div class="col-md-3">
                 {% include '_video_poster.html' %}
             </div>

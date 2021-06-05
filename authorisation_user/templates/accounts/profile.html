@@ -1,6 +1,7 @@
 {% extends 'base.html' %}
 
 {% load follow_or_unfollow %}
+{% load video %}
 
 {% block title %}Profile - {{ account.username }}{% endblock title %}
 
@@ -15,7 +16,9 @@
                     {% endif %}
                 </div>
                 <div class="col">
-                    <span class="h1">{{ account.username.title }} videos <span class="badge rounded-pill bg-secondary">{{ account.videos.count }}</span><br></span>
+                    <span class="h1">{{ account.username.title }} videos
+                        <span class="badge rounded-pill bg-secondary">{% if account != user %}{{ account.videos|filter_video_count }}{% else %}{{ account.videos.count }}{% endif %}</span><br>
+                    </span>
                     {% if account.about %}
                         <p class="h5">{{ account.about }}</p>
                     {% endif %}
@@ -23,11 +26,20 @@
             </div>
             <hr>
             <div class="row">
-                {% for video in account.videos.all %}
-                    <div class="col-3">
-                        {% include '_video_poster.html' %}
-                    </div>
-                {% endfor %}
+                {% if account == user %}
+                    {% for video in account.videos.all %}
+                        <div class="col-3">
+                            {% include '_video_poster.html' %}
+                        </div>
+                    {% endfor %}
+                {% else %}
+                    {% filter_private_videos videos=account.videos.all as videos %}
+                    {% for video in videos %}
+                        <div class="col-3">
+                            {% include '_video_poster.html' %}
+                        </div>
+                    {% endfor %}
+                {% endif %}
             </div>
         </div>
         <div class="col-4">
@@ -42,7 +54,7 @@
                         <div class="col">
                             <a href="{% url 'accounts:profile' username=subscription.username %}">{{ subscription.username.title }}</a><br>
                             Subscribers: <span class="badge rounded-pill bg-danger">{{ subscription.subscribers.count }}</span><br>
-                            Videos: <span class="badge rounded-pill bg-secondary">{{ subscription.videos.count }}</span>
+                            Videos: <span class="badge rounded-pill bg-secondary">{{ subscription.videos|filter_video_count }}</span>
                         </div>
                     </div>
                     <hr>

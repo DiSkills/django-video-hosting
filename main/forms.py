@@ -11,7 +11,7 @@ class AddVideoForm(forms.ModelForm):
 
     class Meta:
         model = Video
-        fields = ('category', 'title', 'slug', 'description', 'preview', 'file')
+        fields = ('category', 'title', 'slug', 'description', 'preview', 'file', 'private', 'comments_on')
 
 
 class EditVideoForm(forms.ModelForm):
@@ -22,4 +22,4 @@ class EditVideoForm(forms.ModelForm):
 
     class Meta:
         model = Video
-        fields = ('category', 'title', 'slug', 'description', 'preview', 'file')
+        fields = ('category', 'title', 'slug', 'description', 'preview', 'file', 'private', 'comments_on')

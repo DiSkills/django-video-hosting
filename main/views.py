@@ -11,6 +11,16 @@ from comments.utils import create_comments_tree
 from comments.forms import CommentForm
 
 
+class BaseException(Exception):
+
+    def __init__(self, message, status_code):
+        self.message = message
+        self.status_code = status_code
+
+    def __str__(self):
+        return f'{self.message}, {self.status_code}'
+
+
 class BaseView(ListView):
     """ Home """
 
@@ -46,6 +56,12 @@ class VideoDetailView(DetailView):
         context['comment_form'] = comment_form
         return context
 
+    def get(self, request, *args, **kwargs):
+        video = Video.objects.get(slug=kwargs['slug'])
+        if video.private and video.author != request.user:
+            raise BaseException('Access is denied', 403)
+        return super().get(request, *args, **kwargs)
+
 
 class VideoStreamingResponse(View):
     """ Video player (chunked video upload) """
@@ -79,6 +95,8 @@ class AddVideoView(LoginRequiredMixin, View):
             new_video.description = form.cleaned_data['description']
             new_video.preview = form.cleaned_data['preview']
             new_video.file = form.cleaned_data['file']
+            new_video.private = form.cleaned_data['private']
+            new_video.comments_on = form.cleaned_data['comments_on']
             new_video.author = request.user
             new_video.save()
             send_manager_about_new_video(new_video)

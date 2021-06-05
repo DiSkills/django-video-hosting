@@ -1,6 +1,6 @@
 from django import template
 
-from ..models import LikeOrDislike
+from ..models import LikeOrDislike, Video
 
 register = template.Library()
 
@@ -20,3 +20,13 @@ def get_vote_user(video, user):
     if vote:
         return vote.first().vote
     return ''
+
+
+@register.simple_tag()
+def filter_private_videos(videos):
+    return videos.filter(private=False)
+
+
+@register.filter
+def filter_video_count(videos):
+    return videos.filter(private=False).count()

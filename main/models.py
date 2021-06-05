@@ -33,6 +33,8 @@ class Video(models.Model):
     created_at = models.DateTimeField(auto_now_add=True, db_index=True, verbose_name='Published')
     preview = models.ImageField(verbose_name='Preview', null=True, blank=True, upload_to=get_timestamp_path)
     views = models.BigIntegerField(verbose_name='Views', default=0)
+    private = models.BooleanField(default=False, verbose_name='Private video?')
+    comments_on = models.BooleanField(default=True, verbose_name='Comments on?')
 
     def __str__(self):
         return self.title

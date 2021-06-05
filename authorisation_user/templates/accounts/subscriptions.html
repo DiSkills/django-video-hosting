@@ -2,6 +2,8 @@
 
 {% block title %}{% endblock title %}
 
+{% load video %}
+
 {% block content %}
     <div class="row">
         <h1 class="text-center">Subscriptions:
@@ -11,7 +13,8 @@
         <div class="col-8">
             <div class="row">
                 {% for subscription in subscriptions %}
-                    {% for video in subscription.videos.all %}
+                    {% filter_private_videos videos=subscription.videos.all as videos %}
+                    {% for video in videos %}
                         <div class="col-3">
                             {% include '_video_poster.html' %}
                         </div>
@@ -32,7 +35,7 @@
                         <a href="{% url 'accounts:profile' username=subscription.username %}">{{ subscription.username.title }}</a><br>
                         Subscribers: <span
                             class="badge rounded-pill bg-danger">{{ subscription.subscribers.count }}</span><br>
-                        Videos: <span class="badge rounded-pill bg-secondary">{{ subscription.videos.count }}</span>
+                        Videos: <span class="badge rounded-pill bg-secondary">{{ subscription.videos|filter_video_count }}</span>
                     </div>
                 </div>
                 <hr>
