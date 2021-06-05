@@ -1,7 +1,10 @@
 {% extends 'base.html' %}
 
+{% load comments_tree %}
+
 {% block title %}{{ video.title }} - Video{% endblock title %}
 
 {% block content %}
     {% include '_video.html' %}
+    {{ comments|comments_filter }}
 {% endblock content %}

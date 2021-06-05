@@ -7,6 +7,7 @@ from django.views.generic.edit import UpdateView
 from .models import Video, Category, LikeOrDislike
 from .forms import AddVideoForm, EditVideoForm
 from .send_mail import send_manager_about_new_video
+from comments.utils import create_comments_tree
 
 
 class BaseView(ListView):
@@ -34,6 +35,13 @@ class VideoDetailView(DetailView):
     context_object_name = 'video'
     template_name = 'main/video_detail.html'
     slug_url_kwarg = 'slug'
+
+    def get_context_data(self, **kwargs):
+        comments = Video.objects.last().comments.all()
+        result = create_comments_tree(comments)
+        context = super().get_context_data(**kwargs)
+        context['comments'] = result
+        return context
 
 
 class VideoStreamingResponse(View):
