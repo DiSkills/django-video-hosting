@@ -10,7 +10,8 @@
             <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4">
                 <li class="nav-item active"><a class="nav-link" href="{% url 'main:base' %}"
                                                aria-current="page">Home</a></li>
-                <li class="nav-item"><a class="nav-link" href="{% url 'accounts:subscriptions' %}">Subscriptions</a>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'accounts:subscriptions' %}">Subscriptions</a>
                 </li>
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button"
@@ -30,23 +31,26 @@
                     <ul class="dropdown-menu" aria-labelledby="accountDropdown">
                         {% if user.is_authenticated %}
                             <li><a class="dropdown-item" href="{% url 'accounts:history' %}">History</a></li>
-                            <li><a class="dropdown-item" href="{% url 'accounts:profile' username=user.username %}">Profile</a>
+                            <li>
+                                <a class="dropdown-item" href="{% url 'accounts:profile' username=user.username %}">Profile</a>
                             </li>
-                            <li><a class="dropdown-item" href="{% url 'accounts:profile_change' %}">Edit Profile</a>
+                            <li>
+                                <a class="dropdown-item" href="{% url 'accounts:profile_change' %}">Edit Profile</a>
                             </li>
-                            <li><a class="dropdown-item" href="{% url 'accounts:password_change' %}">Change password</a>
+                            <li>
+                                <a class="dropdown-item" href="{% url 'accounts:password_change' %}">Change password</a>
                             </li>
                             <li><a class="dropdown-item" href="{% url 'accounts:logout' %}">Logout</a></li>
                         {% else %}
                             <li><a class="dropdown-item" href="{% url 'accounts:login' %}">Login</a></li>
                             <li><a class="dropdown-item" href="{% url 'accounts:registration' %}">Registration</a></li>
+                            <li><a class="dropdown-item" href="{% url 'accounts:reset_password' %}">Reset password</a></li>
                         {% endif %}
                     </ul>
                 </li>
                 {% if user.is_authenticated %}
                     <li class="nav-item"><a class="nav-link" href="{% url 'main:add_video' %}">Add video</a></li>
                 {% endif %}
-                {% comment %} Next content nav {% endcomment %}
             </ul>
         </div>
     </div>

@@ -1,3 +1,5 @@
+from django.contrib import messages
+from django.contrib.messages.views import SuccessMessageMixin
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db.models import Q
 from django.http import FileResponse
@@ -101,18 +103,20 @@ class AddVideoView(LoginRequiredMixin, View):
             new_video.author = request.user
             new_video.save()
             send_manager_about_new_video(new_video)
+            messages.add_message(request, messages.SUCCESS, 'You are new video has been added!')
             return redirect('main:video_detail', slug=new_video.slug)
         context = {'form': form}
         return render(request, 'main/add_video.html', context)
 
 
-class EditVideoView(LoginRequiredMixin, UpdateView):
+class EditVideoView(SuccessMessageMixin, LoginRequiredMixin, UpdateView):
     """ Edit video """
 
     model = Video
     template_name = 'main/edit_video.html'
     form_class = EditVideoForm
     slug_url_kwarg = 'slug'
+    success_message = 'You are video has been edited!'
 
 
 class LikeOrDislikeView(LoginRequiredMixin, View):
