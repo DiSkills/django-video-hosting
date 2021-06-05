@@ -16,6 +16,7 @@ class AdvUser(AbstractUser):
                                         related_name='subscribers')
     avatar = models.ImageField(verbose_name='Avatar', upload_to=get_timestamp_path)
     about = models.CharField(max_length=255, verbose_name='About me', blank=True, null=True)
+    history = models.ManyToManyField('main.Video', verbose_name='History', blank=True)
 
     def follow(self, user):
         """ Follow """

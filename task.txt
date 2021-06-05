@@ -1,6 +1,5 @@
 Fix problem with range video (!!!)
 Reset password
-Add history video
 Search
 Tree comments
 email send all users with True mail_send

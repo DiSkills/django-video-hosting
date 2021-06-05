@@ -8,6 +8,7 @@ from django.views import View
 
 from .forms import RegistrationForm, ChangeProfileForm
 from .models import AdvUser
+from main.models import Video
 
 
 class RedirectProfileView(View):
@@ -129,3 +130,20 @@ class UserPopupView(View):
         user = AdvUser.objects.get(username=kwargs['username'])
         context = {'account': user}
         return render(request, 'accounts/user_popup.html', context)
+
+
+class HistoryView(LoginRequiredMixin, View):
+    """ History """
+
+    def get(self, request, *args, **kwargs):
+        return render(request, 'main/history.html')
+
+
+class DeleteVideoFromHistoryView(LoginRequiredMixin, View):
+    """ Delete video from history """
+
+    def get(self, request, *args, **kwargs):
+        video = Video.objects.get(slug=kwargs['slug'])
+        request.user.history.remove(video)
+        request.user.save()
+        return redirect('accounts:history')

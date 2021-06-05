@@ -41,6 +41,11 @@ class VideoStreamingResponse(View):
 
     def get(self, request, *args, **kwargs):
         video = Video.objects.get(slug=kwargs['slug'])
+        video.views += 1
+        video.save()
+        if request.user.is_authenticated:
+            request.user.history.add(video)
+            request.user.save()
         response = FileResponse(open(video.file.path, 'rb'))
         return response
 

@@ -32,6 +32,7 @@
                                 <a class="nav-link dropdown-toggle" id="accountDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Account</a>
                                 <ul class="dropdown-menu" aria-labelledby="accountDropdown">
                                     {% if user.is_authenticated %}
+                                        <li><a class="dropdown-item" href="{% url 'accounts:history' %}">History</a></li>
                                         <li><a class="dropdown-item" href="{% url 'accounts:profile' username=user.username %}">Profile</a></li>
                                         <li><a class="dropdown-item" href="{% url 'accounts:profile_change' %}">Edit Profile</a></li>
                                         <li><a class="dropdown-item" href="{% url 'accounts:password_change' %}">Change password</a></li>

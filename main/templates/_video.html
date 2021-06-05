@@ -19,25 +19,28 @@
     {% endif %}
 
     <div class="right">{{ video.created_at }}</div>
+    <div class="col-2">
+        <form class="act" action="{% url 'main:likes_or_dislikes' slug=video.slug %}" method="post">
+            {% csrf_token %}
+            {% if user.is_authenticated %}
+                {% get_vote_user user=user video=video as vote %}
+            {% endif %}
+            <label for="like_id">
+                👍 <span class="badge rounded-pill {% if vote == 'like' %}bg-danger{% else %}bg-secondary{% endif %}">
+                        {% likes_or_dislikes_count video=video vote='like' %}
+                   </span>
+            </label>
+            <input id="like_id" class="like_or_dislike radio" type="radio" name="act" value="like">
+            <label for="dislike_id">
+                👎 <span class="badge rounded-pill {% if vote == 'dislike' %}bg-danger{% else %}bg-secondary{% endif %}">
+                        {% likes_or_dislikes_count video=video vote='dislike' %}
+                   </span>
+            </label>
+            <input id="dislike_id" class="like_or_dislike radio" type="radio" name="act" value="dislike">
+        </form>
+    </div>
 
-    <form class="act" action="{% url 'main:likes_or_dislikes' slug=video.slug %}" method="post">
-        {% csrf_token %}
-        {% if user.is_authenticated %}
-            {% get_vote_user user=user video=video as vote %}
-        {% endif %}
-        <label for="like_id">
-            👍 <span class="badge rounded-pill {% if vote == 'like' %}bg-danger{% else %}bg-secondary{% endif %}">
-                    {% likes_or_dislikes_count video=video vote='like' %}
-               </span>
-        </label>
-        <input id="like_id" class="like_or_dislike radio" type="radio" name="act" value="like">
-        <label for="dislike_id">
-            👎 <span class="badge rounded-pill {% if vote == 'dislike' %}bg-danger{% else %}bg-secondary{% endif %}">
-                    {% likes_or_dislikes_count video=video vote='dislike' %}
-               </span>
-        </label>
-        <input id="dislike_id" class="like_or_dislike radio" type="radio" name="act" value="dislike">
-    </form>
+    <div class="col-2">Views: <span class="badge rounded-pill bg-secondary">{{ video.views }}</span></div>
 
 </div>
 

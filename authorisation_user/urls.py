@@ -11,6 +11,8 @@ from .views import (
     ChangePasswordView,
     RedirectProfileView,
     UserPopupView,
+    HistoryView,
+    DeleteVideoFromHistoryView,
 )
 
 app_name = 'accounts'
@@ -25,4 +27,6 @@ urlpatterns = [
     path('profile/<str:username>/', ProfileView.as_view(), name='profile'),
     path('profile/<str:act>/<str:username>/', FollowAndUnfollowView.as_view(), name='act_profile'),
     path('subscriptions/', SubscriptionsView.as_view(), name='subscriptions'),
+    path('history/delete/<str:slug>/', DeleteVideoFromHistoryView.as_view(), name='delete_from_history'),
+    path('history/', HistoryView.as_view(), name='history'),
 ]
