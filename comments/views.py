@@ -1,3 +1,4 @@
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import redirect
 from django.db import transaction
 from django.views import View
@@ -7,7 +8,7 @@ from .models import Comment
 from main.models import Video
 
 
-class CreateCommentView(View):
+class CreateCommentView(LoginRequiredMixin, View):
     """ Create comment """
 
     def post(self, request, *args, **kwargs):
@@ -24,7 +25,7 @@ class CreateCommentView(View):
         return redirect('main:video_detail', kwargs['slug'])
 
 
-class CreateChildComment(View):
+class CreateChildComment(LoginRequiredMixin, View):
     """ Create child comment """
 
     @transaction.atomic

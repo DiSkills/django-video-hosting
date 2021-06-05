@@ -20,7 +20,12 @@ def comments_filter(comments_list):
         i += f"""
              <li>
                  <div class="col-md-12 mb-2 mt-2 p-0">
-                     <small>{comment['author']}</small> | Published: {comment['timestamp']}
+                     <span class="user_popup">
+                         <a href="{comment['author'].get_absolute_url()}">
+                             <img class="img-80 img-fluid" src="{comment['author'].avatar.url}" alt="">
+                             <small>{comment['author']}</small>
+                         </a>
+                     </span> | Published: {comment['timestamp']}
                      <hr>
                      <p>{comment['text']}</p>
                      <a href="#" class="reply" data-id="{comment['id']}" data-parent={comment['parent_id']}>Reply</a>

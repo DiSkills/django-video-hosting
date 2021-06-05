@@ -1,5 +1,3 @@
-
-
 def get_children(queryset_child):
     """ Get comments children """
 
