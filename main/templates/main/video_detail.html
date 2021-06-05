@@ -1,10 +1,23 @@
 {% extends 'base.html' %}
 
 {% load comments_tree %}
+{% load crispy_forms_tags %}
 
 {% block title %}{{ video.title }} - Video{% endblock title %}
 
 {% block content %}
     {% include '_video.html' %}
-    {{ comments|comments_filter }}
+
+    <div class="row mt-3">
+        <span class="strong">Comments:</span>
+        {{ comments|comments_filter }}
+        <hr>
+        <div class="col-md-12">
+            <form id="create_comment" action="{% url 'comments:comment_create' slug=video.slug %}" method="post">
+                {% csrf_token %}
+                {{ comment_form|crispy }}
+                <input type="submit" class="btn btn-primary" value="Submit">
+            </form>
+        </div>
+    </div>
 {% endblock content %}

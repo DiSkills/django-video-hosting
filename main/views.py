@@ -8,6 +8,7 @@ from .models import Video, Category, LikeOrDislike
 from .forms import AddVideoForm, EditVideoForm
 from .send_mail import send_manager_about_new_video
 from comments.utils import create_comments_tree
+from comments.forms import CommentForm
 
 
 class BaseView(ListView):
@@ -37,10 +38,12 @@ class VideoDetailView(DetailView):
     slug_url_kwarg = 'slug'
 
     def get_context_data(self, **kwargs):
-        comments = Video.objects.last().comments.all()
+        comments = kwargs['object'].comments.all()
         result = create_comments_tree(comments)
+        comment_form = CommentForm()
         context = super().get_context_data(**kwargs)
         context['comments'] = result
+        context['comment_form'] = comment_form
         return context
 
 

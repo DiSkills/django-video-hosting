@@ -6,16 +6,29 @@ register = Library()
 
 @register.filter
 def comments_filter(comments_list):
+    """ Comments filter """
+
     res = """
-          <ul>
-              {}
+          <ul style="list-style-type: none;">
+              <div class="col-md-12 mt-2">
+                  {}
+              </div>
           </ul>
           """
     i = ''
     for comment in comments_list:
         i += f"""
              <li>
-                 {comment['id']}
+                 <div class="col-md-12 mb-2 mt-2 p-0">
+                     <small>{comment['author']}</small> | Published: {comment['timestamp']}
+                     <hr>
+                     <p>{comment['text']}</p>
+                     <a href="#" class="reply" data-id="{comment['id']}" data-parent={comment['parent_id']}>Reply</a>
+                     <form action="" method="post" class="comment-form form-group" id="form-{comment['id']}" style="display: none;">
+                         <textarea type="text" class="form-control" name="comment-text"></textarea><br>
+                         <input type="submit" class="btn btn-primary submit-reply" data-id="{comment['id']}" data-submit-reply="{comment['parent_id']}" value="Submit">
+                     </form>
+                 </div>
              </li>
              """
         if comment.get('children'):

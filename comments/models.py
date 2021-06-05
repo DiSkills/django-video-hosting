@@ -1,5 +1,4 @@
 from django.db import models
-from django.contrib.contenttypes.models import ContentType
 
 
 class Comment(models.Model):
@@ -9,16 +8,17 @@ class Comment(models.Model):
     text = models.TextField(verbose_name='Text')
     parent = models.ForeignKey('self', verbose_name='Parent comment', blank=True, null=True,
                                related_name='comment_children', on_delete=models.CASCADE)
-    content_type = models.ForeignKey(ContentType, on_delete=models.CASCADE)
-    object_id = models.PositiveIntegerField()
     timestamp = models.DateTimeField(auto_now=True, verbose_name='Date created comment')
     is_child = models.BooleanField(default=False)
+    video = models.ForeignKey('main.Video', on_delete=models.CASCADE, verbose_name='Video', related_name='comments')
 
     def __str__(self):
-        return f'{self.id}'
+        return f'{self.user.username} - {self.video} - {self.text}'
 
     @property
     def get_parent(self):
+        """ Get parent """
+
         if not self.parent:
             return ''
         return self.parent

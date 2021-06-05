@@ -21,3 +21,7 @@
 input[type=radio].radio {
     display: none;
 }
+
+.strong {
+    font-weight: bold;
+}

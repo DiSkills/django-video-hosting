@@ -1,6 +1,5 @@
 from django.db import models
 from django.urls import reverse
-from django.contrib.contenttypes.fields import GenericRelation
 
 from .utilities import get_timestamp_path
 
@@ -34,7 +33,6 @@ class Video(models.Model):
     created_at = models.DateTimeField(auto_now_add=True, db_index=True, verbose_name='Published')
     preview = models.ImageField(verbose_name='Preview', null=True, blank=True, upload_to=get_timestamp_path)
     views = models.BigIntegerField(verbose_name='Views', default=0)
-    comments = GenericRelation('comments.comment')
 
     def __str__(self):
         return self.title
