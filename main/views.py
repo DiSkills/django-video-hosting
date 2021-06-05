@@ -1,4 +1,5 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.db.models import Q
 from django.http import FileResponse
 from django.shortcuts import render, redirect
 from django.views.generic import ListView, DetailView, View
@@ -126,3 +127,17 @@ class LikeOrDislikeView(LoginRequiredMixin, View):
         vote.vote = act
         vote.save()
         return redirect('main:video_detail', slug=slug)
+
+
+class VideoForSearchView(View):
+    """ Video for search """
+
+    def get(self, request, *args, **kwargs):
+        query = request.GET.get('search')
+        if not query:
+            videos = Video.objects.all()
+        else:
+            videos = Video.objects.filter(Q(title__icontains=query)) or \
+                     Video.objects.filter(Q(author__username__icontains=query))
+        context = {'video_list': videos}
+        return render(request, 'base.html', context)

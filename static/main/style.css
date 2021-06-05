@@ -25,3 +25,7 @@ input[type=radio].radio {
 .strong {
     font-weight: bold;
 }
+
+.search {
+    width: 150px;
+}

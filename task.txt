@@ -1,6 +1,8 @@
 Fix problem with range video (!!!)
 Reset password
-Search
 admin panel
+Add limit on the size of the preview
 
 Testing likes
+
+Dockerfile
