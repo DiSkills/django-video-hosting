@@ -1,12 +1,15 @@
 {% extends 'base.html' %}
 
+{% load video %}
+
 {% block title %}History{% endblock title %}
 
 {% block content %}
     <div class="row">
         <h1 class="text-center">History {{ user.username }}</h1>
         <div class="row">
-            {% for video in user.history.all %}
+            {% filter_private_videos videos=user.history.all as videos %}
+            {% for video in videos %}
                 <div class="col-3">
                     {% include '_video_poster.html' %}
                     <a href="{% url 'accounts:delete_from_history' slug=video.slug %}"><button class="btn btn-danger">Delete</button></a>

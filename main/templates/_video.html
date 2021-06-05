@@ -7,11 +7,12 @@
     <div class="col text-center">
         Author: <br> <img class="img-80 img-fluid" src="{{ video.author.avatar.url }}" alt="">
         <a href="{% url 'accounts:profile' username=video.author.username %}">{{ video.author.username }}</a>
+        {% if video.private %}<span class="badge rounded-pill bg-danger">Video private</span>{% endif %}
     </div>
 
     <div class="col text-center">
         Category: <br> <a href="{% url 'main:category_detail' slug=video.category.slug %}">{{ video.category.name }}</a>
-        <span class="badge rounded-pill bg-secondary">{{ video.category.videos.count }}</span>
+        <span class="badge rounded-pill bg-secondary">{{ video.category.videos|filter_video_count }}</span>
     </div>
 
     {% if user == video.author %}

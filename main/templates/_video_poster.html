@@ -2,6 +2,7 @@
     <a href="{% url 'main:video_detail' slug=video.slug %}"><img class="card-img-top" src="{{ video.preview.url }}" alt=""></a>
     <div class="card-body">
         <a class="card-title h5" href="{% url 'main:video_detail' slug=video.slug %}">{{ video.title }}</a>
+        {% if video.private %}<span class="badge rounded-pill bg-danger">Video private</span>{% endif %}
     </div>
     <ul class="list-group">
         <li class="list-group-item">
