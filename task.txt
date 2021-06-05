@@ -1,8 +1,6 @@
 Fix problem with range video (!!!)
 Reset password
 Search
-Tree comments
-email send all users with True mail_send
 admin panel
 
 Testing likes

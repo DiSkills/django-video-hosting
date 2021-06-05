@@ -1,0 +1,9 @@
+Dear {{ author }}
+
+A new comment was left under your video {{ video.title }}!
+
+Video: {{ host }}{% url 'main:video_detail' slug=video.slug %}
+
+Comment:
+    {{ comment.user.username.title }} Says:
+        {{ comment.text }}

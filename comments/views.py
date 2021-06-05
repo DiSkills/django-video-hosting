@@ -5,6 +5,7 @@ from django.views import View
 
 from .forms import CommentForm
 from .models import Comment
+from .send_mail import send_mail_for_user_about_new_comment
 from main.models import Video
 
 
@@ -22,6 +23,8 @@ class CreateCommentView(LoginRequiredMixin, View):
             new_comment.parent = None
             new_comment.is_child = False
             new_comment.save()
+            if request.user != video.author:
+                send_mail_for_user_about_new_comment(new_comment, video)
         return redirect('main:video_detail', kwargs['slug'])
 
 
@@ -37,5 +40,11 @@ class CreateChildComment(LoginRequiredMixin, View):
         user = request.user
         parent = Comment.objects.get(id=int(current_id))
         is_child = False if not parent else True
-        Comment.objects.create(user=user, text=text, video=video, parent=parent, is_child=is_child)
+        comment = Comment.objects.create(user=user, text=text, video=video, parent=parent, is_child=is_child)
+        if parent.user != user:
+            send_mail_for_user_about_new_comment(comment, video, parent.user)
+            if user != video.author and parent.user != video.author:
+                send_mail_for_user_about_new_comment(comment, video)
+        elif user != video.author:
+            send_mail_for_user_about_new_comment(comment, video)
         return redirect('main:video_detail', video_slug)
