@@ -34,6 +34,9 @@
                             <li>
                                 <a class="dropdown-item" href="{% url 'accounts:profile' username=user.username %}">Profile</a>
                             </li>
+                            {% if not user.activated %}
+                                <li><a class="dropdown-item" href="{% url 'accounts:send_mail_about_activation' %}">Again send mail about activation</a></li>
+                            {% endif %}
                             <li>
                                 <a class="dropdown-item" href="{% url 'accounts:profile_change' %}">Edit Profile</a>
                             </li>

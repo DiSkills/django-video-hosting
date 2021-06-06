@@ -16,10 +16,12 @@ from .views import (
     ResetPasswordView,
     ResetPasswordConfirmView,
     ActivationView,
+    SendMailAboutActivationView,
 )
 
 app_name = 'accounts'
 urlpatterns = [
+    path('activation/send-mail/again/', SendMailAboutActivationView.as_view(), name='send_mail_about_activation'),
     path('activation/<str:username>/', ActivationView.as_view(), name='activate'),
     path('registration/', RegistrationView.as_view(), name='registration'),
     path('login/', LoginUserView.as_view(), name='login'),

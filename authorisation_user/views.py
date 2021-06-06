@@ -201,3 +201,12 @@ class ActivationView(LoginRequiredMixin, View):
         user.save()
         messages.add_message(request, messages.SUCCESS, 'Your account has been activated!')
         return redirect('accounts:profile_redirect')
+
+
+class SendMailAboutActivationView(LoginRequiredMixin, View):
+    """ Send mail about activation if user deleted mail """
+
+    def get(self, request, *args, **kwargs):
+        if not request.user.activated:
+            send_mail_about_activation(request.user)
+        return redirect('accounts:profile_redirect')

@@ -1,5 +1,4 @@
 API
 Dockerfile
-Add send about activations in admin panel
 
 Testing
