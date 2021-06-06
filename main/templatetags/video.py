@@ -1,6 +1,6 @@
 from django import template
 
-from ..models import LikeOrDislike, Video
+from ..models import LikeOrDislike
 
 register = template.Library()
 
