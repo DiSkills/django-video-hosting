@@ -7,7 +7,7 @@ from .utilities import get_timestamp_path
 class Category(models.Model):
     """ Category """
 
-    name = models.CharField(max_length=255, verbose_name='Name category')
+    name = models.CharField(max_length=255, verbose_name='Name')
     slug = models.SlugField(unique=True, verbose_name='Slug')
 
     def __str__(self):
@@ -54,7 +54,14 @@ class Video(models.Model):
 class LikeOrDislike(models.Model):
     """ Like """
 
-    vote = models.CharField(max_length=10, verbose_name='Vote')
+    LIKE = 'like'
+    DISLIKE = 'dislike'
+    VOTE_CHOICES = (
+        ('like', 'Like'),
+        ('dislike', 'Dislike')
+    )
+
+    vote = models.CharField(max_length=10, verbose_name='Vote', choices=VOTE_CHOICES)
     video = models.ForeignKey(Video, verbose_name='Video', on_delete=models.CASCADE, related_name='votes')
     user = models.ForeignKey('authorisation_user.AdvUser', verbose_name='User', on_delete=models.CASCADE,
                              related_name='vote')

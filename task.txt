@@ -1,6 +1,6 @@
-Admin panel
-Add limit on the size of the preview
 API
 Dockerfile
+User activation, add send about activations in admin panel
+Add blocked video
 
 Testing likes
