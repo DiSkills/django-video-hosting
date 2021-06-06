@@ -15,10 +15,12 @@ from .views import (
     DeleteVideoFromHistoryView,
     ResetPasswordView,
     ResetPasswordConfirmView,
+    ActivationView,
 )
 
 app_name = 'accounts'
 urlpatterns = [
+    path('activation/<str:username>/', ActivationView.as_view(), name='activate'),
     path('registration/', RegistrationView.as_view(), name='registration'),
     path('login/', LoginUserView.as_view(), name='login'),
     path('logout/', LogoutUserView.as_view(), name='logout'),

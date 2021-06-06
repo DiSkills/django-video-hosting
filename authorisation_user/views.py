@@ -11,10 +11,12 @@ from django.contrib.auth.views import (
 from django.urls import reverse_lazy
 from django.views.generic.edit import UpdateView
 from django.shortcuts import render, redirect, Http404, get_object_or_404
+from django.http import HttpResponseForbidden
 from django.views import View
 
 from .forms import RegistrationForm, ChangeProfileForm
 from .models import AdvUser
+from .send_mail import send_mail_about_activation
 from .utils import get_count_all_views
 from main.models import Video
 
@@ -52,7 +54,9 @@ class RegistrationView(View):
             new_user.save()
             user = authenticate(username=new_user.username, password=form.cleaned_data['password'])
             login(request, user)
-            messages.add_message(request, messages.SUCCESS, 'Success registration!')
+            send_mail_about_activation(new_user)
+            messages.add_message(request, messages.SUCCESS,
+                                 'Success registration! Please activate your account, mail send')
             return redirect('accounts:profile', username=user.username)
         context = {'form': form}
         return render(request, 'accounts/registration.html', context)
@@ -184,3 +188,16 @@ class ResetPasswordConfirmView(SuccessMessageMixin, PasswordResetConfirmView):
     template_name = 'accounts/reset_password_confirm.html'
     success_url = reverse_lazy('main:base')
     success_message = 'Your password has been reset!'
+
+
+class ActivationView(LoginRequiredMixin, View):
+    """ Activation profile """
+
+    def get(self, request, *args, **kwargs):
+        user = AdvUser.objects.get(username=kwargs['username'])
+        if request.user != user:
+            raise HttpResponseForbidden('You cannot activate someone else\'s account!')
+        user.activated = True
+        user.save()
+        messages.add_message(request, messages.SUCCESS, 'Your account has been activated!')
+        return redirect('accounts:profile_redirect')

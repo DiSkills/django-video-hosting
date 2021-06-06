@@ -8,6 +8,7 @@
         Author: <br> <img class="img-80 img-fluid" src="{{ video.author.avatar.url }}" alt="">
         <a href="{% url 'accounts:profile' username=video.author.username %}">{{ video.author.username }}</a>
         {% if video.private %}<span class="badge rounded-pill bg-danger">Video private</span>{% endif %}
+        {% if video.blocked %}<span class="badge rounded-pill bg-danger">Video blocked</span>{% endif %}
     </div>
 
     <div class="col text-center">

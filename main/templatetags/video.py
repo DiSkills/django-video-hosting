@@ -24,9 +24,9 @@ def get_vote_user(video, user):
 
 @register.simple_tag()
 def filter_private_videos(videos):
-    return videos.filter(private=False)
+    return videos.filter(private=False, blocked=False)
 
 
 @register.filter
 def filter_video_count(videos):
-    return videos.filter(private=False).count()
+    return videos.filter(private=False, blocked=False).count()

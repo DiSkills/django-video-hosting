@@ -6,7 +6,7 @@ def get_count_all_views(user, statistic=False):
 
     dictionary = user.videos.aggregate(Sum('views'), Sum('subscriptions_views'))
     if statistic:
-        if dictionary['views__sum'] != 0:
+        if dictionary['views__sum']:
             statistic_views = dictionary['subscriptions_views__sum'] / dictionary['views__sum'] * 100
             return statistic_views
         return 0

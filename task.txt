@@ -1,6 +1,5 @@
 API
 Dockerfile
-User activation, add send about activations in admin panel
-Add blocked video
+Add send about activations in admin panel
 
-Testing likes
+Testing

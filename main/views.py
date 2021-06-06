@@ -2,7 +2,7 @@ from django.contrib import messages
 from django.contrib.messages.views import SuccessMessageMixin
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db.models import Q
-from django.http import FileResponse
+from django.http import FileResponse, HttpResponseForbidden
 from django.shortcuts import render, redirect
 from django.views.generic import ListView, DetailView, View
 from django.views.generic.edit import UpdateView
@@ -13,16 +13,6 @@ from .send_mail import send_manager_about_new_video
 from .utilities import ranged
 from comments.utils import create_comments_tree
 from comments.forms import CommentForm
-
-
-class BaseException(Exception):
-
-    def __init__(self, message, status_code):
-        self.message = message
-        self.status_code = status_code
-
-    def __str__(self):
-        return f'{self.message}, {self.status_code}'
 
 
 class BaseView(ListView):
@@ -63,7 +53,9 @@ class VideoDetailView(DetailView):
     def get(self, request, *args, **kwargs):
         video = Video.objects.get(slug=kwargs['slug'])
         if video.private and video.author != request.user:
-            raise BaseException('Access is denied', 403)
+            raise HttpResponseForbidden('The author has hidden this video or it has been deleted!')
+        elif video.blocked:
+            raise HttpResponseForbidden('This video was blocked by moderation!')
         return super().get(request, *args, **kwargs)
 
 
@@ -104,6 +96,11 @@ class VideoStreamingResponse(View):
 
 class AddVideoView(LoginRequiredMixin, View):
     """ Add video """
+
+    def dispatch(self, request, *args, **kwargs):
+        if not request.user.activated:
+            raise HttpResponseForbidden('Your account is not activated!')
+        return super().dispatch(request, *args, **kwargs)
 
     def get(self, request, *args, **kwargs):
         form = AddVideoForm(request.POST or None)
