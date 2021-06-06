@@ -10,6 +10,7 @@ from django.views.generic.edit import UpdateView
 from .models import Video, Category, LikeOrDislike
 from .forms import AddVideoForm, EditVideoForm
 from .send_mail import send_manager_about_new_video
+from .utilities import ranged
 from comments.utils import create_comments_tree
 from comments.forms import CommentForm
 
@@ -76,7 +77,27 @@ class VideoStreamingResponse(View):
         if request.user.is_authenticated:
             request.user.history.add(video)
             request.user.save()
-        response = FileResponse(open(video.file.path, 'rb'))
+        file = open(video.file.path, 'rb')
+        file_size = video.file.size
+        content_length = file_size
+        content_range = request.headers.get('range')
+        headers = {}
+        # Search start and end position
+        if content_range is not None:
+            content_range = content_range.strip().lower()
+            content_ranges = content_range.split('=')[-1]
+            range_start, range_end, *_ = map(str.strip, (content_ranges + '-').split('-'))
+            range_start = max(0, int(range_start)) if range_start else 0
+            range_end = min(file_size - 1, int(range_end)) if range_end else file_size - 1
+            content_length = (range_end - range_start) + 1
+            file = ranged(file, start=range_start, end=range_end + 1)
+            headers = {'Content-Range': f'bytes {range_start}-{range_end}/{file_size}'}
+        response = FileResponse(file)
+        response.set_headers({
+            'Accept-Ranges': 'bytes',
+            'Content-Length': str(content_length),
+            **headers,
+        })
         return response
 
 
