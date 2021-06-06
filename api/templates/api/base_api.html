@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+
+{% block title %}API{% endblock title %}
+
+{% block content %}
+    <div class="row">
+        <h1 class="text-center">API</h1>
+        <div class="col">
+            <h3 class="text-center">All entries:</h3>
+            <p><a class="btn btn-primary" href="{% url 'api:categories_api' %}">Categories</a></p>
+            <p><a class="btn btn-primary" href="{% url 'api:videos_api' %}">Videos</a></p>
+        </div>
+        <div class="col">
+            <h3 class="text-center">Categories:</h3>
+            {% for category in categories %}
+                <a class="btn btn-outline-primary" href="{% url 'api:category_api' id=category.id %}">
+                    {{ category.name }}
+                </a>
+            {% endfor %}
+        </div>
+        <div class="col">
+            <h3 class="text-center">Videos:</h3>
+            {% for video in videos %}
+                <a class="btn btn-outline-primary" href="{% url 'api:video_api' id=video.id %}">
+                    {{ video.title }}
+                </a>
+            {% endfor %}
+        </div>
+    </div>
+{% endblock content %}

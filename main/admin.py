@@ -20,7 +20,7 @@ class VideoAdmin(admin.ModelAdmin):
     prepopulated_fields = {'slug': ('title',)}
     fields = (('category', 'author'), ('title', 'slug'), 'description', ('file', 'preview'),
               ('views', 'subscriptions_views'), ('blocked', 'private'), 'comments_on')
-    list_editable = ('blocked', 'comments_on')
+    list_editable = ('blocked', 'comments_on', 'private')
 
 
 class LikeOrDislikeAdmin(admin.ModelAdmin):

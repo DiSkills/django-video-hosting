@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'main',
     'authorisation_user',
     'comments',
+    'api',
 ]
 
 MIDDLEWARE = [

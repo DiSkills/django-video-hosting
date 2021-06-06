@@ -53,6 +53,7 @@
                 </li>
                 {% if user.is_authenticated %}
                     <li class="nav-item"><a class="nav-link" href="{% url 'main:add_video' %}">Add video</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{% url 'api:base_api' %}">API</a></li>
                 {% endif %}
             </ul>
         </div>
