@@ -22,6 +22,8 @@
                     {% if account.about %}
                         <p class="h5">{{ account.about }}</p>
                     {% endif %}
+                    Views: <span class="badge rounded-pill bg-danger">{{ views }}</span>
+                    {% if user == account %}<p>Statistic views (subscription views / views): <span class="strong">{{ statistic }}</span>%</p>{% endif %}
                 </div>
             </div>
             <hr>

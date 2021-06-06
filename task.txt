@@ -1,7 +1,5 @@
 Admin panel
 Add limit on the size of the preview
-All views on channels
-Statistic about like to dislike, views with following to views
 API
 Dockerfile
 

@@ -15,6 +15,7 @@ from django.views import View
 
 from .forms import RegistrationForm, ChangeProfileForm
 from .models import AdvUser
+from .utils import get_count_all_views
 from main.models import Video
 
 
@@ -107,7 +108,10 @@ class ProfileView(View):
         user = AdvUser.objects.filter(username=kwargs['username']).first()
         if not user:
             return Http404('Page not found')
-        context = {'account': user}
+        views = get_count_all_views(user)
+        context = {'account': user, 'views': views}
+        if request.user == user:
+            context['statistic'] = get_count_all_views(user, True)
         return render(request, 'accounts/profile.html', context)
 
 
