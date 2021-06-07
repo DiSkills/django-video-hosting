@@ -33,3 +33,6 @@ Installing only Docker and Docker-compose:
 
     if error about not avatar:
         you need go in home page and go edit profile, and add avatar
+    
+    if first run raise error:
+        restart docker-compose
