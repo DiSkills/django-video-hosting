@@ -1,6 +1,6 @@
 # Anti-YouTube: Django 3.
 
-Installing:
+Installing only Docker and Docker-compose:
 
     docker and docker-compose
     create directory "staticfiles"
@@ -27,3 +27,9 @@ Installing:
 
     if need delete images for docker:
         docker system prune -a
+    
+    Add videos only activated users
+    Avatar is required field
+
+    if error about not avatar:
+        you need go in home page and go edit profile, and add avatar

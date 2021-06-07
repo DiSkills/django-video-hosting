@@ -16,4 +16,5 @@ class Command(BaseCommand):
         email = os.environ.get('ADMIN_1')
 
         superuser = AdvUser.objects.create_superuser(username, email, password)
+        superuser.activated = True
         superuser.save()
