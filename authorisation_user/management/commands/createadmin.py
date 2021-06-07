@@ -6,6 +6,8 @@ from authorisation_user.models import AdvUser
 
 
 class Command(BaseCommand):
+    """ Create admin for docker """
+
     help = 'Create superuser for docker'
 
     def handle(self, *args, **options):
